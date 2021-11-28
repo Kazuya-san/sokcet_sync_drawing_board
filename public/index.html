@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Drawing App with Sync</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="clearcan">Clear the Canvas</button>
+    <button id="redcl">Color Red</button>
+    <button id="greencl">Color Green</button>
+    <button id="bluecl">Color Blue</button>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      let currentColor = "black";
+      var socket = io();
+
+      function setup() {
+        //create full size canvas
+        createCanvas(windowWidth, windowHeight);
+        background(220);
+        strokeWeight(1);
+      }
+
+      document
+        .getElementById("clearcan")
+        .addEventListener("click", function () {
+          background(220);
+          socket.emit("chat message", {
+            message: "clear",
+          });
+        });
+
+      document.getElementById("redcl").addEventListener("click", function () {
+        currentColor = "red";
+        socket.emit("chat message", {
+          message: "red",
+        });
+      });
+
+      document.getElementById("greencl").addEventListener("click", function () {
+        currentColor = "green";
+        socket.emit("chat message", {
+          message: "green",
+        });
+      });
+
+      document.getElementById("bluecl").addEventListener("click", function () {
+        currentColor = "blue";
+        socket.emit("chat message", {
+          message: "blue",
+        });
+      });
+
+      function draw() {
+        //make the button can switch the color
+        if (mouseIsPressed == true) {
+          stroke(currentColor);
+          line(mouseX, mouseY, pmouseX, pmouseY);
+          socket.emit("chat message", {
+            mouseX: mouseX,
+            mouseY: mouseY,
+            pmouseX: pmouseX,
+            pmouseY: pmouseY,
+            currentColor: currentColor,
+          });
+        }
+      }
+
+      socket.on("chat message", function (msg) {
+        if (msg.message === "clear") {
+          background(220);
+        } else if (msg.message === "red") {
+          currentColor = "red";
+        } else if (msg.message === "green") {
+          currentColor = "green";
+        } else if (msg.message === "blue") {
+          currentColor = "blue";
+        } else {
+          stroke(msg.currentColor);
+          line(msg.mouseX, msg.mouseY, msg.pmouseX, msg.pmouseY);
+        }
+      });
+
+      function keyPressed() {
+        if (key == "s") {
+          saveCanvas("myart.png");
+        }
+      }
+    </script>
+  </body>
+</html>
