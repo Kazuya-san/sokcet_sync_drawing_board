@@ -8,10 +8,26 @@
         padding: 0;
         box-sizing: border-box;
       }
+
+      button {
+        background-color: purple;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 299px;
+        transition: 0.3s ease;
+      }
+
+      button:hover {
+        background-color: rgb(165, 5, 165);
+      }
     </style>
   </head>
   <body>
     <button id="clearcan">Clear the Canvas</button>
+    <button id="blackcl">Color Black</button>
     <button id="redcl">Color Red</button>
     <button id="greencl">Color Green</button>
     <button id="bluecl">Color Blue</button>
@@ -25,7 +41,7 @@
         //create full size canvas
         createCanvas(windowWidth, windowHeight);
         background(220);
-        strokeWeight(1);
+        strokeWeight(5);
       }
 
       document
@@ -58,6 +74,13 @@
         });
       });
 
+      document.getElementById("blackcl").addEventListener("click", function () {
+        currentColor = "black";
+        socket.emit("chat message", {
+          message: "black",
+        });
+      });
+
       function draw() {
         //make the button can switch the color
         if (mouseIsPressed == true) {
@@ -82,6 +105,8 @@
           currentColor = "green";
         } else if (msg.message === "blue") {
           currentColor = "blue";
+        } else if (msg.message === "black") {
+          currentColor = "black";
         } else {
           stroke(msg.currentColor);
           line(msg.mouseX, msg.mouseY, msg.pmouseX, msg.pmouseY);
