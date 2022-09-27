@@ -7,17 +7,40 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+        height: 100%;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        min-height: 100vh;
+        font-family: Helvetica, Arial, sans-serif;
       }
 
       button {
         background-color: purple;
         color: white;
         padding: 14px 20px;
-        margin: 8px 0;
         border: none;
         cursor: pointer;
-        width: 299px;
+        width: 150px;
+        border-radius: 10px;
         transition: 0.3s ease;
+      }
+
+      #blackcl {
+        background-color: black;
+      }
+
+      #redcl {
+        background-color: red;
+      }
+
+      #greencl {
+        background-color: green;
+      }
+      #bluecl {
+        background-color: blue;
       }
 
       button:hover {
@@ -26,98 +49,21 @@
     </style>
   </head>
   <body>
-    <button id="clearcan">Clear the Canvas</button>
-    <button id="blackcl">Color Black</button>
-    <button id="redcl">Color Red</button>
-    <button id="greencl">Color Green</button>
-    <button id="bluecl">Color Blue</button>
+    <div>
+      <div style="text-align: center">
+        <h2 style="margin: 0">Collaborative SketchBook</h2>
+        <p style="margin: 2px">
+          Just share the link with anyone to make them join
+        </p>
+      </div>
+      <button id="clearcan">Clear the Canvas</button>
+      <button id="blackcl">Color Black</button>
+      <button id="redcl">Color Red</button>
+      <button id="greencl">Color Green</button>
+      <button id="bluecl">Color Blue</button>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.js"></script>
     <script src="/socket.io/socket.io.js"></script>
-    <script>
-      let currentColor = "black";
-      var socket = io();
-
-      function setup() {
-        //create full size canvas
-        createCanvas(windowWidth, windowHeight);
-        background(220);
-        strokeWeight(5);
-      }
-
-      document
-        .getElementById("clearcan")
-        .addEventListener("click", function () {
-          background(220);
-          socket.emit("chat message", {
-            message: "clear",
-          });
-        });
-
-      document.getElementById("redcl").addEventListener("click", function () {
-        currentColor = "red";
-        socket.emit("chat message", {
-          message: "red",
-        });
-      });
-
-      document.getElementById("greencl").addEventListener("click", function () {
-        currentColor = "green";
-        socket.emit("chat message", {
-          message: "green",
-        });
-      });
-
-      document.getElementById("bluecl").addEventListener("click", function () {
-        currentColor = "blue";
-        socket.emit("chat message", {
-          message: "blue",
-        });
-      });
-
-      document.getElementById("blackcl").addEventListener("click", function () {
-        currentColor = "black";
-        socket.emit("chat message", {
-          message: "black",
-        });
-      });
-
-      function draw() {
-        //make the button can switch the color
-        if (mouseIsPressed == true) {
-          stroke(currentColor);
-          line(mouseX, mouseY, pmouseX, pmouseY);
-          socket.emit("chat message", {
-            mouseX: mouseX,
-            mouseY: mouseY,
-            pmouseX: pmouseX,
-            pmouseY: pmouseY,
-            currentColor: currentColor,
-          });
-        }
-      }
-
-      socket.on("chat message", function (msg) {
-        if (msg.message === "clear") {
-          background(220);
-        } else if (msg.message === "red") {
-          currentColor = "red";
-        } else if (msg.message === "green") {
-          currentColor = "green";
-        } else if (msg.message === "blue") {
-          currentColor = "blue";
-        } else if (msg.message === "black") {
-          currentColor = "black";
-        } else {
-          stroke(msg.currentColor);
-          line(msg.mouseX, msg.mouseY, msg.pmouseX, msg.pmouseY);
-        }
-      });
-
-      function keyPressed() {
-        if (key == "s") {
-          saveCanvas("myart.png");
-        }
-      }
-    </script>
+    <script src="./script.js"></script>
   </body>
 </html>
