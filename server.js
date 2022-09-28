@@ -34,15 +34,15 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     console.log("User disconnected");
-    console.log(io.sockets.adapter.rooms);
+    // console.log(io.sockets.adapter.rooms);
   });
 });
 
-const paths = __dirname + "/public/";
-app.use(express.static(paths + "/script.js"));
+const paths = __dirname + "/public";
+app.use(express.static(paths + "/scripts"));
 
 app.get("/", function (req, res) {
-  console.log("redirecting");
+  // console.log("redirecting");
   return res.redirect(`/board/${uuid.v4()}`);
 });
 
