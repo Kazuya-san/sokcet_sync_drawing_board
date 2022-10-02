@@ -17,13 +17,21 @@
         font-family: Helvetica, Arial, sans-serif;
       }
 
+      .buttonContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+      }
+
       button {
-        background-color: purple;
+        background-color: #555555;
         color: white;
-        padding: 14px 20px;
+        padding: 10px 10px;
         border: none;
         cursor: pointer;
-        width: 150px;
+        width: 70px;
         border-radius: 10px;
         transition: 0.3s ease;
       }
@@ -41,15 +49,20 @@
       }
       #bluecl {
         background-color: blue;
+        margin-right: 40px;
+      }
+
+      .active {
+        opacity: 0.7;
       }
 
       button:hover {
-        background-color: rgb(165, 5, 165);
+        background-color: #666666;
       }
     </style>
   </head>
   <body>
-    <div>
+    <div class="buttonContainer">
       <div style="text-align: center">
         <h2 style="margin: 0">Collaborative SketchBook</h2>
         <p style="margin: 2px">
@@ -57,11 +70,25 @@
           press S to save the Sketch
         </p>
       </div>
-      <button id="clearcan">Clear the Canvas</button>
-      <button id="blackcl">Color Black</button>
-      <button id="redcl">Color Red</button>
-      <button id="greencl">Color Green</button>
-      <button id="bluecl">Color Blue</button>
+      <div
+        style="
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+          min-width: 45vw;
+        "
+      >
+        <button id="blackcl">Black</button>
+        <button id="redcl">Red</button>
+        <button id="greencl">Green</button>
+        <button id="bluecl">Blue</button>
+
+        <button id="clearcan">Clear</button>
+        <button id="penBtn">Pen</button>
+        <button id="rectBtn">Rect</button>
+        <button id="circleBtn">Circle</button>
+        <button id="lineBtn">Line</button>
+      </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.js"></script>
     <script src="/socket.io/socket.io.js"></script>

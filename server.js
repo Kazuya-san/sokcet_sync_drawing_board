@@ -50,7 +50,7 @@ app.get("/board/:id", function (req, res) {
   res.sendFile(path.join(paths, "/index.html"));
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5005;
 
 server.listen(PORT, () => {
   console.log("listening on *:" + PORT);
