@@ -150,7 +150,6 @@ function mouseReleased() {
   endX = mouseX;
   endY = mouseY;
 
-  console.log("mouse released", drawings.length);
 
   if(mouseButton === LEFT){
   if (drawRect) {
