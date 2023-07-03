@@ -19,7 +19,7 @@ const uuid = require("uuid");
 // });
 
 io.on("connection", (socket) => {
-  console.log("New user connected");
+  // console.log("New user connected");
 
   //listen for join-room event
   socket.on("join-room", (roomId) => {
@@ -33,7 +33,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    console.log("User disconnected");
+    // console.log("User disconnected");
     // console.log(io.sockets.adapter.rooms);
   });
 });
