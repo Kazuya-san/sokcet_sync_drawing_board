@@ -29,7 +29,10 @@ io.on("connection", (socket) => {
   });
 
   socket.on("chat message", (roomId, msg) => {
-    io.to(roomId).emit("chat message", msg);
+    // io.to(roomId).emit("chat message", msg);
+    socket.broadcast.to(roomId).emit("chat message", msg);
+    // socket.broadcast.emit("chat message", msg);
+    // socket.to(roomId).emit("chat message", msg);
   });
 
   socket.on("disconnect", () => {

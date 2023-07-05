@@ -142,7 +142,7 @@ function mouseDragged() {
         y: offsetY,
       }
     });
-    // redrawCanvas();
+    redrawCanvas();
   }
 }
 
